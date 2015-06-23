@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="actionbar_bg">#00b1cf</color>
+    <color name="actionbar_txt_title">#ffffff</color>
+
+
+    <!--LOGIN-->
+    <color name="login_background">#00b1cf</color>
+    <color name="login_txt_title">#ffffff</color>
+
+
+
+
+
+</resources>
