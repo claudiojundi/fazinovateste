@@ -1,11 +1,8 @@
 package fazinova.com.testefazinova.activities;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 
 import com.facebook.AccessToken;
@@ -19,22 +16,18 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+import fazinova.com.testefazinova.Entities.MyProfile;
 import fazinova.com.testefazinova.R;
-import roboguice.activity.RoboActivity;
-import roboguice.inject.InjectView;
 
 
-public class Login extends RoboActivity {
+public class Login extends Activity {
 
-    @InjectView(R.id.login_btn_facebook_login)
+
     private LoginButton loginButton;
 
     private CallbackManager callbackManager;
@@ -43,35 +36,30 @@ public class Login extends RoboActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-
-            Log.d("","package name = " + getPackageName());
-
-
-
-            PackageInfo info = getPackageManager().getPackageInfo("fazinova.com.testefazinova",PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-            Log.d("","NameNotFoundException e = " + e.getMessage());
-
-        } catch (NoSuchAlgorithmException e) {
-            Log.d("","NoSuchAlgorithmException e = " + e.getMessage());
-        }
-
 
         initFacebook();
 
-        setContentView(R.layout.activity_login);
+        if (isFacebookLoggedIn()) {
+
+            changeActivity();
+
+        } else {
+            setContentView(R.layout.activity_login);
+            setFacebook();
+        }
+
+    }
 
 
+    private boolean isFacebookLoggedIn() {
 
-        setFacebook();
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
 
+        if (accessToken == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private void initFacebook() {
@@ -83,6 +71,7 @@ public class Login extends RoboActivity {
 
     private void setFacebook() {
 
+        loginButton = (LoginButton) findViewById(R.id.login_btn_facebook_login);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_about_me"));
 
         callbackManager = CallbackManager.Factory.create();
@@ -102,8 +91,6 @@ public class Login extends RoboActivity {
                         getUserInformation();
 
                     }
-
-
 
 
                     @Override
@@ -128,17 +115,37 @@ public class Login extends RoboActivity {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
 
-//                        Log.d("", "getUserInformation onCompleted object = " + object);
-//                        Log.d("", "getUserInformation onCompleted response = " + response);
-
 
                         try {
 
+
+                            String userId = object.getString("id");
                             String name = object.getString("name");
                             String email = object.getString("email");
 
-                            Log.d("","name = " + name);
-                            Log.d("","email = " + email);
+
+                            Log.d("", "JSONObject = " + object.toString());
+
+
+                            JSONObject picture = object.getJSONObject("picture");
+
+                            JSONObject data = picture.getJSONObject("data");
+
+                            String imgThumbUrl = data.getString("url");
+
+
+                            MyProfile myProfile = new MyProfile();
+                            myProfile.setUserId(userId);
+                            myProfile.setName(name);
+                            myProfile.setEmail(email);
+                            myProfile.setThumbUrl(imgThumbUrl);
+                            myProfile.save();
+
+                            Log.d("", "name = " + name);
+                            Log.d("", "email = " + email);
+                            Log.d("", "imgThumbUrl = " + imgThumbUrl);
+
+                            changeActivity();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -148,11 +155,20 @@ public class Login extends RoboActivity {
                 });
 
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,email");
+        parameters.putString("fields", "id,name,email,picture{url}");
 
         request.setParameters(parameters);
         request.executeAsync();
 
+    }
+
+
+    private void changeActivity() {
+
+        Intent i = new Intent(this, Navigation.class);
+        startActivity(i);
+
+        this.finish();
     }
 
 
