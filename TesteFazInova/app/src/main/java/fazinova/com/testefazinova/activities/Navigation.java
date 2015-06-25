@@ -50,7 +50,7 @@ public class Navigation extends Activity {
 
         if (fragment != null) {
 
-            getFragmentManager().beginTransaction().replace(R.id.navigation_mainlayout, fragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().add(R.id.navigation_mainlayout, fragment).addToBackStack(null).commit();
 
         }
 

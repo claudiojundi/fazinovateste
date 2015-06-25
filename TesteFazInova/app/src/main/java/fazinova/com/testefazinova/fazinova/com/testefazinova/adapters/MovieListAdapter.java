@@ -15,6 +15,7 @@ import java.util.List;
 
 import fazinova.com.testefazinova.Entities.Flickr.FlickrUser;
 import fazinova.com.testefazinova.R;
+import lombok.Getter;
 
 /**
  * Created by jundisassaki on 6/23/15.
@@ -23,6 +24,8 @@ import fazinova.com.testefazinova.R;
 public class MovieListAdapter extends BaseAdapter {
 
     private Context context;
+
+    @Getter
     private List<FlickrUser> flickrUsersList;
 
     private DisplayImageOptions displayImageOptions;

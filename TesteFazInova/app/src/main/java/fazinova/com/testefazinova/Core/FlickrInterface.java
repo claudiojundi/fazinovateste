@@ -16,7 +16,7 @@ public interface FlickrInterface {
     void getPhotoSearch(Callback<FlickrSearchServer> FlickrSearchServerCallback);
 
 
-    @GET("/?method=flickr.photos.getInfo&api_key=a01700f5f7a6ab1876845e9e54c6360c&format=json")//&photo_id={photoId}
+    @GET("/?method=flickr.photos.getInfo&api_key=a01700f5f7a6ab1876845e9e54c6360c&format=json&nojsoncallback=1")//&photo_id={photoId}
     void getPhotoInfo(@Query("photo_id") String photoId, Callback<FlickrPhotoInfoServer> FlickrPhotoInfoServerCallback);
 
 }

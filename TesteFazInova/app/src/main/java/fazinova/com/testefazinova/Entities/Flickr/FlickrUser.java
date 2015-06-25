@@ -29,4 +29,7 @@ public class FlickrUser extends Model {
     @Column(name = "AuthorThumbUrl")
     private String authorThumbUrl;
 
+    @Column(name = "CommentsSize")
+    private String commentsSize;
+
 }
