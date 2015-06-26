@@ -1,5 +1,6 @@
 package fazinova.com.testefazinova.activities;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 
 import com.facebook.login.LoginManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -19,11 +21,11 @@ import fazinova.com.testefazinova.R;
 import fazinova.com.testefazinova.fragments.MoviesList;
 
 
-public class Navigation extends ActionBarActivity implements android.support.v7.widget.SearchView.OnQueryTextListener {
+public class Navigation extends Activity implements SearchView.OnQueryTextListener {
 
 
     private RelativeLayout mainLayout;
-    private android.support.v7.widget.SearchView mSearchView;
+    private SearchView mSearchView;
 
     private Fragment currentFragment;
     private Fragment oldFragment;
@@ -44,14 +46,12 @@ public class Navigation extends ActionBarActivity implements android.support.v7.
 
         changeFragment(currentFragment);
 
-//        getFragmentManager().beginTransaction().add(R.id.navigation_mainlayout, currentFragment).commit();
-
 
     }
 
-    public ActionBar getActionbarActivity() {
-        return getSupportActionBar();
-    }
+//    public ActionBar getActionbarActivity() {
+//        return getSupportActionBar();
+//    }
 
 
     private void initImgLoaderConfig() {
@@ -69,7 +69,6 @@ public class Navigation extends ActionBarActivity implements android.support.v7.
             this.currentFragment = fragment;
 
             getFragmentManager().beginTransaction().add(R.id.navigation_mainlayout, fragment).addToBackStack(null).commit();
-
 
 
         }
@@ -99,8 +98,13 @@ public class Navigation extends ActionBarActivity implements android.support.v7.
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
-        mSearchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(searchItem);
-        mSearchView.setOnQueryTextListener(this);
+//        mSearchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(searchItem);
+
+//        mSearchView = (SearchView) getA
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        searchView.setOnQueryTextListener(this);
 
         MenuItem logOff = menu.findItem(R.id.menu_logout);
 

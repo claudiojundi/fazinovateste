@@ -16,6 +16,7 @@ import com.activeandroid.query.Select;
 import com.nhaarman.listviewanimations.appearance.simple.ScaleInAnimationAdapter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.pkmmte.view.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ import retrofit.client.Response;
 
 public class MoviesList extends Fragment {
 
-    private ImageView imgUserThumb;
+    private CircularImageView imgUserThumb;
     private TextView txtUserName;
     private TextView txtUserEmail;
 
@@ -69,7 +70,7 @@ public class MoviesList extends Fragment {
 
         txtUserName = (TextView) v.findViewById(R.id.movieslist_txt_name);
         txtUserEmail = (TextView) v.findViewById(R.id.movieslist_txt_email);
-        imgUserThumb = (ImageView) v.findViewById(R.id.movieslist_img_thumb);
+        imgUserThumb = (CircularImageView) v.findViewById(R.id.movieslist_img_thumb);
 
         listViewMovies = (ListView) v.findViewById(R.id.movieslist_listview);
 
@@ -103,6 +104,7 @@ public class MoviesList extends Fragment {
                 movieListAdapter.notifyDataSetChanged();
             }
         }
+
 
     }
 

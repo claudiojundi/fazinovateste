@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.pkmmte.view.CircularImageView;
 
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class CommentsListAdapter extends BaseAdapter {
             view = (View) LayoutInflater.from(context).inflate(R.layout.row_comments, parent, false);
 
             viewHolder = new ViewHolder();
-            viewHolder.imgThumb = (ImageView) view.findViewById(R.id.row_comments_img_thumb);
+            viewHolder.imgThumb = (CircularImageView) view.findViewById(R.id.row_comments_img_thumb);
             viewHolder.txtName = (TextView) view.findViewById(R.id.row_comments_txt_name);
             viewHolder.txtComment = (TextView) view.findViewById(R.id.row_comments_txt_comment);
 
@@ -98,7 +99,7 @@ public class CommentsListAdapter extends BaseAdapter {
 
     private static class ViewHolder {
 
-        private ImageView imgThumb;
+        private CircularImageView imgThumb;
         private TextView txtName;
         private TextView txtComment;
 

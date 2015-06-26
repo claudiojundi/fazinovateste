@@ -16,6 +16,7 @@ import com.activeandroid.query.Select;
 import com.nhaarman.listviewanimations.appearance.simple.ScaleInAnimationAdapter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.pkmmte.view.CircularImageView;
 
 import fazinova.com.testefazinova.Core.FlickrConsumer;
 import fazinova.com.testefazinova.Entities.Flickr.FlickrUser;
@@ -37,7 +38,7 @@ public class MovieDetail extends Fragment {
     private ImageView imgPhoto;
     private TextView txtPhotoTitle;
 
-    private ImageView imgOwnerThumb;
+    private CircularImageView imgOwnerThumb;
     private TextView txtOwnerName;
 
     private TextView txtCommentsSize;
@@ -70,13 +71,14 @@ public class MovieDetail extends Fragment {
         });
 
 
-        ((Navigation) getActivity()).getActionbarActivity().hide();
+//        ((Navigation) getActivity()).getActionbarActivity().hide();
 
+        getActivity().getActionBar().hide();
 
         imgPhoto = (ImageView) v.findViewById(R.id.moviedetail_img_photo);
         txtPhotoTitle = (TextView) v.findViewById(R.id.moviedetail_txt_title);
 
-        imgOwnerThumb = (ImageView) v.findViewById(R.id.moviedetail_img_owner_profile);
+        imgOwnerThumb = (CircularImageView) v.findViewById(R.id.moviedetail_img_owner_profile);
         txtOwnerName = (TextView) v.findViewById(R.id.moviedetail_txt_owner_name);
 
         txtCommentsSize = (TextView) v.findViewById(R.id.moviedetail_txt_comments);
@@ -89,7 +91,9 @@ public class MovieDetail extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        ((Navigation) getActivity()).getActionbarActivity().show();
+//        ((Navigation) getActivity()).getActionbarActivity().show();
+
+        getActivity().getActionBar().show();
     }
 
     @Override
