@@ -1,11 +1,16 @@
 package fazinova.com.testefazinova.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -39,19 +44,20 @@ public class Login extends Activity {
 
         initFacebook();
 
+        setContentView(R.layout.activity_login);
+        setFacebook();
+
         if (isFacebookLoggedIn()) {
 
             changeActivity();
 
-        } else {
-            setContentView(R.layout.activity_login);
-            setFacebook();
         }
+
 
     }
 
-
     private boolean isFacebookLoggedIn() {
+
 
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
 
@@ -65,7 +71,7 @@ public class Login extends Activity {
     private void initFacebook() {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
-
+        callbackManager = CallbackManager.Factory.create();
     }
 
 
@@ -74,7 +80,6 @@ public class Login extends Activity {
         loginButton = (LoginButton) findViewById(R.id.login_btn_facebook_login);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_about_me"));
 
-        callbackManager = CallbackManager.Factory.create();
 
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -169,6 +174,7 @@ public class Login extends Activity {
         startActivity(i);
 
         this.finish();
+        this.overridePendingTransition(0, 0);
     }
 
 

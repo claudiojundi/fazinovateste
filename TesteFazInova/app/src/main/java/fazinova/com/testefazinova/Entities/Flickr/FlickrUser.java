@@ -32,4 +32,7 @@ public class FlickrUser extends Model {
     @Column(name = "CommentsSize")
     private String commentsSize;
 
+    @Column(name = "Tag")
+    private String tag;
+
 }

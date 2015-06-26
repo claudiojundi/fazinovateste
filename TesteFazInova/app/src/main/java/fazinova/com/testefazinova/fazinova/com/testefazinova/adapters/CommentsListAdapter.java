@@ -1,6 +1,7 @@
 package fazinova.com.testefazinova.fazinova.com.testefazinova.adapters;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,30 +12,28 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fazinova.com.testefazinova.Entities.Flickr.FlickrUser;
+import fazinova.com.testefazinova.Entities.Flickr.PhotoComments.FlickrPhotoComment;
 import fazinova.com.testefazinova.R;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
- * Created by jundisassaki on 6/23/15.
+ * Created by jundisassaki on 6/24/15.
  */
 
-public class MovieListAdapter extends BaseAdapter {
+public class CommentsListAdapter extends BaseAdapter {
 
     private Context context;
 
     @Getter
-    @Setter
-    private List<FlickrUser> flickrUsersList;
+    private FlickrPhotoComment[] flickrPhotoCommentsArray;
 
     private DisplayImageOptions displayImageOptions;
 
-    public MovieListAdapter(Context context) {
-        this.flickrUsersList = new ArrayList<FlickrUser>();
+    public CommentsListAdapter(Context context, FlickrPhotoComment[] flickrPhotoCommentsArray) {
+        this.flickrPhotoCommentsArray = flickrPhotoCommentsArray;
         this.context = context;
 
         displayImageOptions = new DisplayImageOptions.Builder().cacheInMemory(true)
@@ -44,12 +43,7 @@ public class MovieListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-
-        if (flickrUsersList == null) {
-            return 0;
-        } else {
-            return flickrUsersList.size();
-        }
+        return flickrPhotoCommentsArray.length;
     }
 
     @Override
@@ -73,12 +67,12 @@ public class MovieListAdapter extends BaseAdapter {
 
         if (view == null) {
 
-            view = (View) LayoutInflater.from(context).inflate(R.layout.row_movielist, parent, false);
+            view = (View) LayoutInflater.from(context).inflate(R.layout.row_comments, parent, false);
 
             viewHolder = new ViewHolder();
-            viewHolder.imgThumb = (ImageView) view.findViewById(R.id.row_movielist_img_thumb);
-            viewHolder.txtTitle = (TextView) view.findViewById(R.id.row_movielist_txt_title);
-            viewHolder.txtAuthor = (TextView) view.findViewById(R.id.row_movielist_txt_author);
+            viewHolder.imgThumb = (ImageView) view.findViewById(R.id.row_comments_img_thumb);
+            viewHolder.txtName = (TextView) view.findViewById(R.id.row_comments_txt_name);
+            viewHolder.txtComment = (TextView) view.findViewById(R.id.row_comments_txt_comment);
 
 
             view.setTag(viewHolder);
@@ -90,10 +84,11 @@ public class MovieListAdapter extends BaseAdapter {
         }
 
 
-        viewHolder.txtTitle.setText(flickrUsersList.get(position).getPhotoTitle());
-        viewHolder.txtAuthor.setText(flickrUsersList.get(position).getAuthorName());
+        viewHolder.txtName.setText(flickrPhotoCommentsArray[position].getAuthorName());
+        viewHolder.txtComment.setText(Html.fromHtml(flickrPhotoCommentsArray[position].getComment()));
 
-        ImageLoader.getInstance().displayImage(flickrUsersList.get(position).getPhotoUrl(), viewHolder.imgThumb, displayImageOptions);
+
+        ImageLoader.getInstance().displayImage("http://farm" + flickrPhotoCommentsArray[position].getIconfarm() + ".staticflickr.com/" + flickrPhotoCommentsArray[position].getIconServer() + "/buddyicons/" + flickrPhotoCommentsArray[position].getAuthor() + ".jpg", viewHolder.imgThumb, displayImageOptions);
 
 
         return view;
@@ -104,8 +99,8 @@ public class MovieListAdapter extends BaseAdapter {
     private static class ViewHolder {
 
         private ImageView imgThumb;
-        private TextView txtTitle;
-        private TextView txtAuthor;
+        private TextView txtName;
+        private TextView txtComment;
 
     }
 
