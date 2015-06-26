@@ -91,7 +91,6 @@ public class MovieDetail extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-//        ((Navigation) getActivity()).getActionbarActivity().show();
 
         getActivity().getActionBar().show();
     }

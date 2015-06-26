@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +17,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.pkmmte.view.CircularImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fazinova.com.testefazinova.Core.FlickrConsumer;
@@ -49,7 +47,6 @@ public class MoviesList extends Fragment {
 
     private ListView listViewMovies;
     private MovieListAdapter movieListAdapter;
-    private ArrayList<FlickrUser> flickrUserArrayList;
 
 
     public MoviesList() {
@@ -123,12 +120,10 @@ public class MoviesList extends Fragment {
 
     public void flickrConsume(final String tag) {
 
-        flickrUserArrayList = new ArrayList<FlickrUser>();
 
         if (movieListAdapter != null) {
 
             movieListAdapter.getFlickrUsersList().clear();
-//            movieListAdapter.notifyDataSetChanged();
 
         }
 
@@ -153,7 +148,6 @@ public class MoviesList extends Fragment {
 
                     FlickrUser flickrUserSelect = new Select().from(FlickrUser.class).where("PhotoId = ?", flickrSearchPhoto.getPhotoId()).executeSingle();
 
-//                    if (flickrUserSelect == null) {
 
                     FlickrUser flickrUser = new FlickrUser();
                     flickrUser.setTag(tag);
@@ -164,8 +158,6 @@ public class MoviesList extends Fragment {
                     flickrConsumePhotoInfo(flickrUser, flickrUser.getPhotoId());
 
                     flickrUser.save();
-//                    }
-
 
                 }
 
@@ -193,9 +185,6 @@ public class MoviesList extends Fragment {
 
 
                         flickrUser.save();
-
-
-//                        flickrUserArrayList.add(flickrUser);
 
                         if (movieListAdapter != null) {
                             movieListAdapter.getFlickrUsersList().add(flickrUser);

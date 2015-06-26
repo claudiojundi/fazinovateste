@@ -25,7 +25,6 @@ public class Navigation extends Activity implements SearchView.OnQueryTextListen
 
 
     private RelativeLayout mainLayout;
-    private SearchView mSearchView;
 
     private Fragment currentFragment;
     private Fragment oldFragment;
@@ -38,7 +37,6 @@ public class Navigation extends Activity implements SearchView.OnQueryTextListen
 
         mainLayout = (RelativeLayout) findViewById(R.id.navigation_mainlayout);
 
-//
 
         initImgLoaderConfig();
 
@@ -48,10 +46,6 @@ public class Navigation extends Activity implements SearchView.OnQueryTextListen
 
 
     }
-
-//    public ActionBar getActionbarActivity() {
-//        return getSupportActionBar();
-//    }
 
 
     private void initImgLoaderConfig() {
@@ -96,11 +90,6 @@ public class Navigation extends Activity implements SearchView.OnQueryTextListen
 
         getMenuInflater().inflate(R.menu.menu_navigation, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-
-//        mSearchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(searchItem);
-
-//        mSearchView = (SearchView) getA
 
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
@@ -139,7 +128,6 @@ public class Navigation extends Activity implements SearchView.OnQueryTextListen
         super.onOptionsItemSelected(item);
 
         if (item.getItemId() == R.id.action_search) {
-            mSearchView.setIconified(false);
             return true;
         }
 

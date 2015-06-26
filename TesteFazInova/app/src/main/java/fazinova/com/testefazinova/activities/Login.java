@@ -51,6 +51,8 @@ public class Login extends Activity {
 
             changeActivity();
 
+        } else {
+            getActionBar().hide();
         }
 
 
